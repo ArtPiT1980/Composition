@@ -1,5 +1,6 @@
 package com.artpit.android.composition.domain.usecases
 
+import android.os.CountDownTimer
 import com.artpit.android.composition.domain.entity.GameSettings
 import com.artpit.android.composition.domain.entity.Level
 import com.artpit.android.composition.domain.repository.GameRepository
