@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.artpit.android.composition.R
 import com.artpit.android.composition.databinding.FragmentGameFinishedBinding
 import com.artpit.android.composition.domain.entity.GameResult
 
@@ -47,6 +48,60 @@ class GameFinishedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.gameResult = gameResult
+        setOnClickListeners()
+        bindViews()
+    }
+
+    private fun bindViews() {
+        //binding.emojiResult.setImageResource(getSmileResId())
+        //gameResult.gameSettings.minCountOfRightAnswersString
+        with(binding) {
+            emojiResult.setImageResource(getSmileResId())
+//            tvRequiredAnswers.text = String.format(
+//                getString(R.string.required_score),
+//                gameResult.gameSettings.minCountOfRightAnswers
+//            )
+//
+//            tvScoreAnswers.text = String.format(
+//                getString(R.string.score_answers),
+//                gameResult.countOfRightAnswers
+//            )
+//
+//            tvRequiredPercentage.text = String.format(
+//                getString(R.string.required_percentage),
+//                gameResult.gameSettings.minPercentOfRightAnswers
+//            )
+
+            tvScorePercentage.text = String.format(
+                getString(R.string.score_percentage),
+                getPercentageOfRightAnswers()
+            )
+        }
+    }
+
+    private fun getPercentageOfRightAnswers() = with(gameResult) {
+        if (countOfQuestions == 0) {
+            0
+        } else {
+            ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
+        }
+    }
+
+    private fun getSmileResId(): Int {
+        return if (gameResult.winner) {
+            R.drawable.ic_smile
+        } else {
+            R.drawable.ic_sad
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun setOnClickListeners() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 retryGame()
@@ -59,14 +114,9 @@ class GameFinishedFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     private fun parseArgs() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            requireArguments().getParcelable(KEY_GAME_RESULT,GameResult::class.java)?.let {
+            requireArguments().getParcelable(KEY_GAME_RESULT, GameResult::class.java)?.let {
                 gameResult = it
             }
         } else {

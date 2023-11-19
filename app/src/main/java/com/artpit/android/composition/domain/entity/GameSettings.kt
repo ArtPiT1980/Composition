@@ -1,6 +1,7 @@
 package com.artpit.android.composition.domain.entity
 
 import android.os.Parcelable
+import com.artpit.android.composition.R
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
