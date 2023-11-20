@@ -14,12 +14,6 @@ class WelcomeFragment : Fragment() {
     private val binding: FragmentWelcomeBinding
         get() = _binding ?: throw RuntimeException("FragmentWelcomeBinding == null")
 
-    companion object {
-        fun newInstance(): WelcomeFragment {
-            return WelcomeFragment()
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,11 +35,6 @@ class WelcomeFragment : Fragment() {
     }
 
     private fun launchChooseLevelFragment() {
-//        requireActivity().supportFragmentManager.beginTransaction()
-//            .replace(R.id.main_container, ChooseLevelFragment.newInstance())
-//            .addToBackStack(null)
-//            .commit()
-
         findNavController().navigate(R.id.action_welcomeFragment_to_chooseLevelFragment)
     }
 }

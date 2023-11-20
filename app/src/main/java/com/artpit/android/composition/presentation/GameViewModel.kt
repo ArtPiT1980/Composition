@@ -23,6 +23,7 @@ class GameViewModel(private val application: Application, private val level: Lev
     private var countOfRightAnswers = 0
     private var countOfQuestions = 0
     private val _formattedTime = MutableLiveData<String>()
+
     val formattedTime: LiveData<String>
         get() = _formattedTime
 
